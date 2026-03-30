@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'PROD_API_URL' // Este valor será reemplazado durante el build de Render
+  apiUrl: 'https://arfind-backend.onrender.com' // Este valor será reemplazado durante el build de Render
 };

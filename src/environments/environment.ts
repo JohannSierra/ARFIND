@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'PROD_API_URL'
+  apiUrl: 'https://arfind-backend.onrender.com'
 };
 
 /*
