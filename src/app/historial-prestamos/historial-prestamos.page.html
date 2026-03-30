@@ -1,0 +1,54 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Historial de Préstamos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="movimientos.length === 0" class="empty-state animate__animated animate__fadeIn">
+    <ion-icon name="file-tray-outline"></ion-icon>
+    <p>Sin registros vinculados</p>
+  </div>
+
+  <ion-card *ngFor="let mov of movimientos" class="movimiento-card glass-card animate__animated animate__fadeInUp">
+    <ion-card-header>
+      <ion-card-subtitle style="color: var(--ion-color-primary); font-weight: 600;">
+        <ion-icon name="calendar-outline" style="vertical-align: middle; margin-right: 4px;"></ion-icon>
+        {{ mov.fecha | date:'medium' }}
+      </ion-card-subtitle>
+      <ion-card-title style="font-size: 1.1rem; font-weight: 800; color: #fff;">Resumen del Préstamo</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content class="ion-no-padding">
+      <ion-list lines="none" class="ion-padding">
+        <ion-item *ngFor="let p of mov.productos" style="margin-bottom: 8px; background: rgba(255,255,255,0.03); border-radius: 12px;">
+          <ion-avatar slot="start" *ngIf="p.imagen">
+            <img [src]="p.imagen" />
+          </ion-avatar>
+          <ion-icon *ngIf="!p.imagen" name="construct-outline" slot="start" style="font-size: 1rem; opacity: 0.5;"></ion-icon>
+          <ion-label>
+            <h2 style="font-weight: 600; font-size: 0.95rem;">{{ p.nombre }}</h2>
+            <p style="font-size: 0.8rem;" *ngIf="!p.numeroSerie">Cantidad: {{ p.cantidad }} unidades</p>
+            <p style="font-size: 0.8rem; color: var(--ion-color-secondary);" *ngIf="p.numeroSerie">Serie: {{ p.numeroSerie }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+      <div class="ion-padding">
+        <ion-button *ngIf="mov.estadoDevolucion !== 'solicitada'" expand="block" shape="round" color="primary" class="login-btn" (click)="devolver(mov)">
+          <ion-icon name="paper-plane-outline" slot="start"></ion-icon>
+          Solicitar Devolución
+        </ion-button>
+
+        <ion-button *ngIf="mov.estadoDevolucion === 'solicitada'" expand="block" shape="round" color="warning" class="login-btn" style="color: #000; font-weight: 700;" (click)="devolver(mov)">
+          <ion-icon name="keypad-outline" slot="start"></ion-icon>
+          Ingresar PIN
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

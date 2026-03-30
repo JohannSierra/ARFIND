@@ -1,0 +1,150 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Administración</ion-title>
+
+    <ion-button slot="end" fill="clear" routerLink="/registro">
+      <ion-icon name="person-add-outline" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-segment [(ngModel)]="vista" mode="ios">
+    <ion-segment-button value="usuarios">
+      <ion-label>USUARIOS</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="almacen">
+      <ion-label>INVENTARIO</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="prestamos">
+      <ion-label>PENDIENTES ({{ movimientosPendientes.length }})</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- USUARIOS -->
+  <div *ngIf="vista === 'usuarios'">
+    <ion-card *ngFor="let u of usuarios" class="admin-card glass-card animate__animated animate__fadeIn">
+      <ion-item lines="none" class="ion-padding-vertical">
+        <ion-avatar slot="start" style="width: 50px; height: 50px;">
+          <div
+            style="background: rgba(var(--ion-color-primary-rgb), 0.1); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; border-radius: 50%;">
+            <ion-icon name="person-outline" color="primary" style="font-size: 1.5rem;"></ion-icon>
+          </div>
+        </ion-avatar>
+        <ion-label class="product-info">
+          <h2>{{ u.nombre }}</h2>
+          <p>{{ u.puesto }}</p>
+        </ion-label>
+        <ion-buttons slot="end">
+          <ion-button color="primary" fill="clear" (click)="editar(u)">
+            <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+          <ion-button color="danger" fill="clear" (click)="pedirAutorizacionEliminar(u._id)">
+            <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-card>
+  </div>
+
+  <!-- ALMACEN -->
+  <div *ngIf="vista === 'almacen'">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin: 16px 8px;">
+      <h3 style="margin: 0; font-weight: 700; opacity: 0.8; font-size: 1.2rem;">Inventario</h3>
+      <ion-button size="small" (click)="agregarProducto()" class="login-btn" style="margin: 0;">
+        <ion-icon name="add-outline" slot="start"></ion-icon>
+        Nuevo Item
+      </ion-button>
+    </div>
+
+    <ion-searchbar 
+      [(ngModel)]="terminoBusqueda" 
+      (ionInput)="filtrarInventario()" 
+      placeholder="Buscar por serie, código o nombre..."
+      class="glass-searchbar">
+    </ion-searchbar>
+
+    <ion-card *ngFor="let item of inventarioFiltrado" class="admin-card glass-card animate__animated animate__fadeIn">
+      <ion-item lines="none" class="ion-padding-vertical">
+        <ion-avatar slot="start">
+          <div
+            style="background: rgba(255,255,255,0.05); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+            <img *ngIf="item.imagen" [src]="item.imagen" style="width: 100%; height: 100%; object-fit: cover;" />
+            <ion-icon *ngIf="!item.imagen" [name]="item.tipo === 'Equipo' ? 'construct-outline' : 'cube-outline'" color="primary"></ion-icon>
+          </div>
+        </ion-avatar>
+        <ion-label class="product-info">
+          <h2>{{ item.nombre }}</h2>
+          <p>{{ item.tipo }} • Stock: {{ item.cantidad }}</p>
+          <ion-badge
+            [color]="item.estado === 'Disponible' ? 'success' : (item.estado === 'En uso' ? 'warning' : 'danger')"
+            mode="ios" class="status-indicator">
+            {{ item.estado }}
+          </ion-badge>
+        </ion-label>
+        <ion-buttons slot="end">
+          <ion-button color="primary" fill="clear" (click)="editarProducto(item)">
+            <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+          <ion-button color="danger" fill="clear" (click)="eliminarProducto(item._id)">
+            <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-card>
+  </div>
+
+  <!-- ⏳ PRÉSTAMOS PENDIENTES -->
+  <div *ngIf="vista === 'prestamos'">
+    <div *ngIf="movimientosPendientes.length === 0"
+      class="ion-text-center ion-padding animate__animated animate__fadeIn">
+      <ion-icon name="shield-checkmark-outline" style="font-size: 64px; opacity: 0.1;" color="success"></ion-icon>
+      <p style="opacity: 0.5;">No se detectan pendientes</p>
+    </div>
+
+    <ion-card *ngFor="let m of movimientosPendientes" class="admin-card glass-card animate__animated animate__fadeInUp"
+      [style.border-left]="m.vencido ? '6px solid var(--ion-color-danger)' : (m.porVencer ? '6px solid var(--ion-color-warning)' : 'none')">
+      <ion-item lines="none" class="ion-padding-vertical">
+        <ion-avatar slot="start">
+          <div
+            style="background: rgba(255,255,255,0.1); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+            <ion-icon name="person" color="primary"></ion-icon>
+          </div>
+        </ion-avatar>
+        <ion-label class="product-info">
+          <h2>{{ m.usuario }}</h2>
+          <p>Solicitado hace {{ m.tiempoTranscurrido }} horas</p>
+          <div class="ion-margin-top">
+            <ion-badge *ngIf="m.estadoDevolucion === 'solicitada'" color="success" class="status-indicator" style="font-size: 0.9rem; padding: 6px 12px; margin-bottom: 8px; display: block; border: 1px solid #fff;">
+              ✅ DEVOLUCIÓN SOLICITADA - PIN: {{ m.codigoLiberacion }}
+            </ion-badge>
+            <ion-badge *ngIf="m.vencido" color="danger" class="status-indicator">VENCIDO</ion-badge>
+            <ion-badge *ngIf="m.porVencer" color="warning" class="status-indicator">POR VENCER (21h+)</ion-badge>
+          </div>
+        </ion-label>
+      </ion-item>
+
+      <ion-list class="ion-padding-horizontal ion-padding-bottom">
+        <ion-item *ngFor="let p of m.productos" dense lines="none"
+          style="margin-bottom: 8px; background: rgba(255,255,255,0.03); border-radius: 10px;">
+          <ion-icon name="hammer-outline" slot="start" style="font-size: 1rem; opacity: 0.5;"></ion-icon>
+          <ion-label style="font-size: 0.85rem; font-weight: 500;">
+            {{ p.nombre }}
+            <span *ngIf="p.numeroSerie" style="display: block; font-size: 0.75rem; color: var(--ion-color-secondary); opacity: 0.8;">SN: {{ p.numeroSerie }}</span>
+          </ion-label>
+          <ion-badge slot="end" color="light" mode="ios">x{{ p.cantidad }}</ion-badge>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  </div>
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-button expand="block" color="danger" fill="clear" (click)="cerrarSesion()">
+      Cerrar sesión
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

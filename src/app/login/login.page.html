@@ -1,0 +1,33 @@
+<ion-content class="ion-padding">
+  <div class="login-wrapper">
+
+    <div class="logo-container animate__animated animate__fadeInDown">
+      <img src="assets/icon/logo.png" class="logo-big" />
+    </div>
+
+    <ion-card class="login-card animate__animated animate__fadeInUp">
+      <h2>Bienvenido</h2>
+      <p>Ingresa tu código de acceso para continuar</p>
+
+      <div class="input-group">
+        <ion-item lines="none">
+          <ion-icon name="key-outline" slot="start" color="primary"></ion-icon>
+          <ion-input
+            label="Código de Acceso"
+            labelPlacement="floating"
+            placeholder="000000"
+            maxlength="6"
+            type="password"
+            [(ngModel)]="codigo">
+          </ion-input>
+        </ion-item>
+      </div>
+
+      <ion-button expand="block" (click)="iniciarSesion()" class="login-btn">
+        Continuar
+        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+      </ion-button>
+    </ion-card>
+
+  </div>
+</ion-content>

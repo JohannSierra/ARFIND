@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="volver()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      {{ modoEdicion ? 'Editar Item' : 'Registro Almacén' }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- PREVIEW IMAGEN -->
+  <div class="image-upload-wrapper ion-margin-bottom" (click)="seleccionarImagen()">
+    <div *ngIf="!inventario.imagen" class="placeholder">
+      <ion-icon name="camera-outline"></ion-icon>
+      <p>Añadir foto del producto</p>
+    </div>
+    <img *ngIf="inventario.imagen" [src]="inventario.imagen" class="preview-img" />
+    <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+  </div>
+
+  <ion-card>
+    <ion-list lines="inset" class="ion-padding">
+      <ion-item>
+        <ion-input label="Nombre" labelPlacement="floating" [(ngModel)]="inventario.nombre" (ionBlur)="buscarPorNombre()"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-select label="Categoría" [(ngModel)]="inventario.categoria">
+          <ion-select-option value="Limpieza">Limpieza</ion-select-option>
+          <ion-select-option value="Mantenimiento">Mantenimiento</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-select label="Tipo" [(ngModel)]="inventario.tipo">
+          <ion-select-option value="Equipo">Equipo</ion-select-option>
+          <ion-select-option value="Herramienta">Herramienta</ion-select-option>
+          <ion-select-option value="Consumible">Consumible</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-input label="Cantidad" labelPlacement="floating" type="number"
+          [(ngModel)]="inventario.cantidad" (ionChange)="ajustarSeries()"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-select label="Estado" [(ngModel)]="inventario.estado">
+          <ion-select-option value="Disponible">Disponible</ion-select-option>
+          <ion-select-option value="En uso">En uso</ion-select-option>
+          <ion-select-option value="Mantenimiento">Mantenimiento</ion-select-option>
+          <ion-select-option value="Baja">Baja</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ng-container *ngIf="(inventario.tipo === 'Equipo' || inventario.tipo === 'Herramienta') && !modoEdicion">
+        <ion-item *ngFor="let serie of inventario.series; let i = index; trackBy: customTrackBy">
+          <ion-input [label]="'Número de serie ' + (i + 1)" labelPlacement="floating" [(ngModel)]="inventario.series[i]"></ion-input>
+        </ion-item>
+      </ng-container>
+
+      <ion-item *ngIf="(inventario.tipo === 'Equipo' || inventario.tipo === 'Herramienta') && modoEdicion">
+        <ion-input label="Número de serie" labelPlacement="floating" type="text" [(ngModel)]="inventario.numeroSerie"></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="inventario.tipo === 'Consumible'">
+        <ion-input label="Código de barras / Nro de Producto" labelPlacement="floating" type="text" [(ngModel)]="inventario.codigoBarras" (ionBlur)="buscarPorCodigoBarras()"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-textarea label="Observaciones" labelPlacement="floating"
+          [(ngModel)]="inventario.observaciones"></ion-textarea>
+      </ion-item>
+    </ion-list>
+
+    <div class="ion-padding">
+      <ion-button expand="block" (click)="pedirAutorizacion()">
+        {{ modoEdicion ? 'Actualizar' : 'Guardar' }}
+      </ion-button>
+    </div>
+  </ion-card>
+
+</ion-content>

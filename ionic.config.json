@@ -1,0 +1,7 @@
+{
+  "name": "ARFIND",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

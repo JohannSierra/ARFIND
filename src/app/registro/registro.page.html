@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registro</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <ion-card>
+    <ion-list lines="none" class="ion-padding">
+      <ion-item>
+        <ion-input
+          label="Nombre completo"
+          labelPlacement="stacked"
+          placeholder="Nombre y apellidos"
+          [(ngModel)]="nombre">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-select
+          label="Puesto del empleado"
+          labelPlacement="stacked"
+          placeholder="Selecciona puesto"
+          [(ngModel)]="puesto">
+          <ion-select-option *ngFor="let p of puestos" [value]="p">
+            {{ p }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <div class="ion-padding">
+      <ion-button expand="block" (click)="pedirClaveAdmin()">
+        {{ modoEdicion ? 'Actualizar' : 'Registrar' }}
+      </ion-button>
+    </div>
+  </ion-card>
+
+</ion-content>

@@ -1,0 +1,35 @@
+.admin-card {
+  margin-bottom: 20px;
+}
+
+.user-badge {
+  background: rgba(var(--ion-color-primary-rgb), 0.2);
+  color: var(--ion-color-primary);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid rgba(var(--ion-color-primary-rgb), 0.3);
+}
+
+.product-info {
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: #ffffff;
+  }
+  p {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+}
+
+.status-indicator {
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(8px);
+}

@@ -1,0 +1,113 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>HOME</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/historial-prestamos" color="primary">
+        <ion-icon name="time-outline" slot="start"></ion-icon>
+        Historial
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- Selector -->
+  <ion-segment [(ngModel)]="filtro" (ionChange)="filtrar()" mode="ios">
+    <ion-segment-button value="Todos">
+      <ion-label>Todo</ion-label>
+    </ion-segment-button>
+
+    <ion-segment-button value="Limpieza">
+      <ion-label>Limpieza</ion-label>
+    </ion-segment-button>
+
+    <ion-segment-button value="Mantenimiento">
+      <ion-label>Mantenimiento</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- GRID -->
+  <ion-grid>
+    <ion-row>
+
+      <ion-col size="6" size-md="4" size-lg="3" *ngFor="let item of inventarioFiltrado">
+
+        <ion-card class="inventario-card" [class.card-disabled]="item.estado !== 'Disponible'">
+
+          <ion-badge class="status-badge"
+            [color]="item.estado === 'Disponible' ? 'success' : (item.estado === 'En uso' ? 'warning' : 'danger')">
+            {{ item.estado }}
+          </ion-badge>
+
+          <div class="product-image-container" *ngIf="item.imagen">
+            <img [src]="item.imagen" class="product-img" />
+          </div>
+
+          <div class="card-content-wrapper">
+            <div class="card-info">
+              <h3 class="titulo">{{ item.nombre }}</h3>
+              <p class="categoria">{{ item.categoria }}</p>
+              <p class="stock">Disponible: {{ item.cantidad }}</p>
+            </div>
+
+            <div class="card-actions" *ngIf="item.estado === 'Disponible'">
+              <div class="acciones">
+                <!-- Agregar 1 -->
+                <button class="action-btn primary" [disabled]="obtenerCantidadSolicitada(item._id) >= item.cantidad"
+                  (click)="agregarRapido(item)">
+                  <ion-icon name="add-circle-outline"></ion-icon>
+                </button>
+
+                <!-- Cantidad personalizada -->
+                <button class="action-btn outline" (click)="agregarCantidad(item)">
+                  <ion-icon name="create-outline"></ion-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Solicitud -->
+  <ion-card *ngIf="solicitudes.length > 0" class="solicitud-card">
+    <ion-card-header>
+      <ion-card-title>Solicitud Actual</ion-card-title>
+    </ion-card-header>
+
+    <ion-list lines="inset">
+      <ion-item *ngFor="let s of solicitudes">
+        <ion-avatar slot="start" *ngIf="s.imagen">
+          <img [src]="s.imagen" />
+        </ion-avatar>
+        <ion-icon *ngIf="!s.imagen" name="cube-outline" slot="start" style="opacity: 0.5;"></ion-icon>
+        <ion-label>
+          <h2 style="font-weight: 600;">{{ s.nombre }}</h2>
+          <p>Cantidad: {{ s.cantidad }}</p>
+        </ion-label>
+
+        <ion-button color="danger" fill="clear" (click)="eliminarSolicitud(s)">
+          <ion-icon name="close-circle-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <div class="ion-padding">
+      <ion-button expand="block" color="success" shape="round" (click)="enviarSolicitud()">
+        <ion-icon name="send-outline" slot="start"></ion-icon>
+        Enviar solicitud
+      </ion-button>
+    </div>
+  </ion-card>
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-button expand="block" fill="clear" color="danger" (click)="cerrarSesion()">
+      Cerrar sesión
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

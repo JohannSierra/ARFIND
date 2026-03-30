@@ -1,0 +1,114 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/* Ionic Dark Mode */
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+/* Custom Global Styles */
+ion-content {
+    --background: radial-gradient(circle at top right, #1a1a1a, #050505); /* Technical Dark Slate */
+}
+
+ion-toolbar {
+    --background: rgba(20, 20, 20, 0.7);
+    --color: #ffffff;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+ion-title {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: 'Outfit', sans-serif;
+    background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+ion-card {
+    background: rgba(255, 255, 255, 0.03) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    color: #ffffff;
+}
+
+ion-item {
+    --background: transparent;
+    --color: #ffffff;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --padding-start: 16px;
+    font-family: 'Outfit', sans-serif;
+}
+
+ion-input,
+ion-textarea,
+ion-select {
+    --color: #ffffff;
+    --placeholder-color: rgba(255, 255, 255, 0.5);
+}
+
+ion-button {
+    --border-radius: 12px;
+    font-weight: 600;
+    text-transform: none;
+}
+
+ion-list {
+    background: transparent !important;
+}
+
+ion-segment {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    margin-bottom: 16px;
+}
+
+ion-segment-button {
+    --color: rgba(255, 255, 255, 0.7);
+    --color-checked: #ffffff;
+    --indicator-color: var(--ion-color-primary);
+}
+
+.glass-searchbar {
+    --background: rgba(255, 255, 255, 0.05) !important;
+    --border-radius: 16px;
+    --box-shadow: none;
+    --clear-button-color: #ffffff;
+    --color: #ffffff;
+    --icon-color: rgba(255, 255, 255, 0.5);
+    --placeholder-color: rgba(255, 255, 255, 0.4);
+    --placeholder-font-weight: 400;
+    margin-bottom: 20px;
+    
+    .searchbar-input-container {
+        background: rgba(255, 255, 255, 0.05) !important;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px !important;
+    }
+}
