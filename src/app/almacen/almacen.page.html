@@ -59,7 +59,7 @@
     </ion-card>
   </div>
 
-  <!-- ⏳ PRÉSTAMOS PENDIENTES -->
+  <!-- PRÉSTAMOS PENDIENTES -->
   <div *ngIf="vista === 'pendientes'">
     <div *ngIf="movimientosPendientes.length === 0" class="ion-text-center ion-padding animate__animated animate__fadeIn">
       <ion-icon name="file-tray-full-outline" style="font-size: 64px; opacity: 0.1;" color="success"></ion-icon>
@@ -78,8 +78,8 @@
           <h2>{{ m.usuario }}</h2>
           <p>Transcurrido: {{ m.tiempoTranscurrido }} horas</p>
           <div class="ion-margin-top">
-            <ion-badge *ngIf="m.estadoDevolucion === 'solicitada'" color="success" class="status-indicator" style="font-size: 0.9rem; padding: 6px 12px; margin-bottom: 8px; display: block; border: 1px solid #fff;">
-              ✅ DEVOLUCIÓN SOLICITADA - PIN: {{ m.codigoLiberacion }}
+            <ion-badge *ngIf="m.estadoDevolucion === 'solicitada'" color="success" class="status-indicator" style="font-size: 0.9rem; padding: 6px 12px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; border: 1px solid #fff; gap: 8px;">
+              <ion-icon name="checkmark-circle-outline"></ion-icon> DEVOLUCIÓN SOLICITADA - PIN: {{ m.codigoLiberacion }}
             </ion-badge>
             <ion-badge *ngIf="m.vencido" color="danger" class="status-indicator">VENCIDO</ion-badge>
             <ion-badge *ngIf="m.porVencer" color="warning" class="status-indicator">POR VENCER</ion-badge>

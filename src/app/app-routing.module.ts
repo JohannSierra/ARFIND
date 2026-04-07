@@ -57,7 +57,7 @@ const routes: Routes = [
     data: { roles: ['Cajero', 'Cocinero', 'Mantenimiento', 'Limpieza', 'Almacenista', 'Administrador'] }
   },
 
-  // ⚠️ SIEMPRE AL FINAL
+  // SIEMPRE AL FINAL
   {
     path: '',
     redirectTo: 'login',

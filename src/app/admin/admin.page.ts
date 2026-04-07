@@ -133,14 +133,14 @@ eliminarProducto(id: string) {
 }
 
 
-  // ✏️ Editar usuario reutilizando formulario
+  // Editar usuario reutilizando formulario
   editar(usuario: any) {
     this.router.navigate(['/registro'], {
       state: { usuario }
     });
   }
 
-  // 🔐 Pedir clave antes de eliminar
+  // Pedir clave antes de eliminar
   async pedirAutorizacionEliminar(id: string) {
 
     const alert = await this.alertCtrl.create({

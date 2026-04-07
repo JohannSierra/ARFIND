@@ -12,22 +12,22 @@ export class AlmacenService {
 
   constructor(private http: HttpClient) {}
 
-  // 📦 Obtener inventario
+  // Obtener inventario
   obtenerInventario(): Observable<any[]> {
     return this.http.get<any[]>(`${this.api}/inventario`);
   }
 
-  // ➕ Agregar producto al inventario
+  // Agregar producto al inventario
   agregarInventario(data: any): Observable<any> {
     return this.http.post(`${this.api}/inventario`, data);
   }
 
-  // ❌ Eliminar producto
+  // Eliminar producto
   eliminarInventario(id: string): Observable<any> {
     return this.http.delete(`${this.api}/inventario/${id}`);
   }
 
-  // 🔐 Validar clave de admin o almacenista
+  // Validar clave de admin o almacenista
   validarAdmin(clave: string): Observable<any> {
     return this.http.post(`${this.api}/validar-admin`, { clave });
   }

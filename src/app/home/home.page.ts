@@ -261,7 +261,7 @@ enviarSolicitud() {
              }
           });
         }
-        this.mostrarAlerta('✅ Solicitud Aprobada', msj);
+        this.mostrarAlerta('Solicitud Aprobada', msj);
         this.solicitudes = [];
         this.cargarInventario();
       },

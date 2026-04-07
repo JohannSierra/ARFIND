@@ -120,7 +120,7 @@ export class RegistroalmacenPage implements OnInit {
   }
 
 
-  // 🔐 Pide clave antes de guardar
+  // Pide clave antes de guardar
   async pedirAutorizacion() {
 
     const alert = await this.alertCtrl.create({

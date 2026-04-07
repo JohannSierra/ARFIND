@@ -45,7 +45,7 @@ export class LoginPage {
       next: async (res) => {
         console.log('LOGIN OK:', res);
 
-        // 👇 GUARDA TODO EL USUARIO
+        // GUARDA TODO EL USUARIO
         localStorage.setItem('usuario', JSON.stringify(res));
 
         this.auth.login(res.puesto);
